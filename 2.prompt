@@ -1,0 +1,428 @@
+I'll create specific prompts you can use with coding assistants like Cursor or Windsurf to generate code for each microservice in your quick commerce delivery app. These prompts are designed to provide the necessary context while focusing on implementation details.
+
+# Code Generation Prompts for Quick Commerce Delivery App Microservices
+
+## Authentication Service Prompt
+
+```
+Generate a complete NodeJS Authentication Service for a quick commerce delivery application with the following requirements:
+
+1. Use Express.js framework and follow RESTful API design
+2. Implement JWT-based authentication with refresh token mechanism
+3. Support user roles: Customer, Warehouse Staff, Delivery Personnel, and Admin
+4. Include endpoints for:
+   - User registration with email verification
+   - Login/logout functionality
+   - Password reset flow
+   - Profile management (view/update)
+   - Role-based authorization middleware
+   - Social login integration (Google, Facebook)
+   - Optional 2FA using authenticator apps
+5. Include proper error handling, input validation using Joi or similar
+6. Store user data in MongoDB with encrypted passwords using bcrypt
+7. Include comprehensive unit tests using Jest
+8. Implement rate limiting for security
+9. Use TypeScript for better type safety
+10. Follow microservice architecture best practices with clear separation of concerns
+11. Include Swagger/OpenAPI documentation
+
+The service must be containerized with Docker and include relevant environment configurations. Ensure the code follows industry best practices for security in e-commerce applications.
+```
+
+## Product Catalog Service Prompt
+
+```
+Create a comprehensive NodeJS Product Catalog Service for a quick commerce delivery platform with the following specifications:
+
+1. Use Express.js and follow RESTful API principles
+2. Implement MongoDB for storing product information with the following schemas:
+   - Product (name, description, base price, availability, images, avg rating)
+   - ProductVariant (size, color, weight, price adjustment, SKU, inventory count)
+   - Category (hierarchical structure, with parent/child relationships)
+   - ProductAttribute (customizable attributes like "organic", "refrigerated", etc.)
+3. Include endpoints for:
+   - CRUD operations for products, variants, categories, and attributes
+   - Product search with filtering (by category, price range, attributes)
+   - Product recommendation based on popularity/related items
+   - Inventory management (check/update stock levels)
+   - Bulk import/export capabilities
+   - Product review and rating management
+4. Implement caching strategy using Redis for improved performance
+5. Include inventory tracking and low-stock notifications
+6. Add image upload and management (with resizing) using cloud storage
+7. Implement search using MongoDB aggregation or Elasticsearch integration
+8. Include comprehensive input validation and error handling
+9. Write unit and integration tests using Jest
+10. Use TypeScript for improved type safety
+11. Include Swagger/OpenAPI documentation
+
+Ensure the service follows microservice best practices, is containerized with Docker, and includes proper logging and monitoring hooks.
+```
+
+## Order Management Service Prompt
+
+```
+Develop a robust NodeJS Order Management Service for a quick commerce delivery application with these specifications:
+
+1. Use Express.js framework with TypeScript and RESTful API design
+2. Implement PostgreSQL database for storing order information with the following entities:
+   - Orders (customer info, delivery address, payment status, order status)
+   - OrderItems (products, quantities, pricing)
+   - OrderStatus history (timestamps for ordered, confirmed, packed, shipped, delivered)
+   - Delivery information (delivery person, estimated delivery time)
+3. Create endpoints for:
+   - Order creation and modification
+   - Order status updates with history tracking
+   - Order cancellation with inventory adjustment
+   - Order search and filtering (by status, date, customer)
+   - Delivery time estimation based on warehouse location and customer address
+   - Returns and refunds processing
+4. Implement event-driven architecture using RabbitMQ or Kafka for:
+   - Inventory updates when orders are placed/canceled
+   - Payment processing communication
+   - Notification triggers at key order status changes
+5. Include comprehensive validation, error handling and transaction management
+6. Implement order analytics for reporting (conversion rates, average order value)
+7. Add real-time order tracking capabilities
+8. Create unit and integration tests using Jest
+9. Implement database migrations using Sequelize or similar
+10. Include Swagger/OpenAPI documentation
+
+The service should be containerized with Docker, follow microservice best practices, and include proper logging and monitoring capabilities for production scenarios.
+```
+
+## Payment Processing Service Prompt
+
+```
+Create a secure NodeJS Payment Processing Service for a quick commerce delivery platform with the following requirements:
+
+1. Use Express.js with TypeScript and RESTful API design patterns
+2. Implement PostgreSQL database for storing payment information:
+   - Transactions (amount, status, timestamps, payment method)
+   - Payment methods (card info with proper encryption)
+   - Invoices and receipts
+   - Refund records
+3. Integrate with payment gateways:
+   - Stripe as the primary payment processor
+   - PayPal as an alternative option
+   - Support for wallet-based payments
+4. Implement endpoints for:
+   - Processing payments for orders
+   - Saving and managing payment methods securely
+   - Generating invoices and receipts
+   - Processing refunds (full and partial)
+   - Payment status verification
+   - Payment analytics and reporting
+5. Follow PCI DSS compliance requirements for handling sensitive payment data
+6. Use proper encryption for storing sensitive information
+7. Implement idempotency to prevent duplicate payments
+8. Create comprehensive error handling for payment failures
+9. Add webhook handlers for payment status updates from payment providers
+10. Include retry mechanisms for failed payments
+11. Write unit and integration tests with Jest
+12. Include Swagger/OpenAPI documentation
+
+The service should be containerized with Docker, include proper security headers, implement rate limiting for payment endpoints, and follow microservice best practices.
+```
+
+## Warehouse Management Service Prompt
+
+```
+Develop a comprehensive NodeJS Warehouse Management Service for a quick commerce delivery application with these requirements:
+
+1. Use Express.js with TypeScript and RESTful API design
+2. Implement MongoDB for storing warehouse information:
+   - Inventory (product, quantity, location within warehouse)
+   - Warehouse zones and shelf locations
+   - Pick lists and packing instructions
+   - Staff assignments and performance metrics
+   - Quality control checkpoints
+3. Create endpoints for:
+   - Inventory management (view/update stock levels)
+   - Order picking optimization (shortest path algorithm)
+   - Packing workflow management
+   - Staff task assignment and tracking
+   - Delivery handoff process
+   - Returns processing
+   - Inventory forecasting and reordering suggestions
+4. Implement real-time inventory synchronization
+5. Add barcode/QR code generation and processing
+6. Create batch processing for bulk operations
+7. Implement webhooks to notify other services of inventory changes
+8. Add reporting endpoints for warehouse efficiency metrics
+9. Include comprehensive input validation and error handling
+10. Write unit and integration tests using Jest
+11. Include Swagger/OpenAPI documentation
+
+The service should be containerized with Docker, follow microservice architecture best practices, include proper logging for warehouse operations, and support multiple warehouse locations.
+```
+
+## Analytics & Reporting Service Prompt
+
+```
+Create a comprehensive NodeJS Analytics & Reporting Service for a quick commerce delivery platform with the following specifications:
+
+1. Use Express.js with TypeScript and RESTful API design
+2. Implement PostgreSQL for storing aggregated data with the following models:
+   - Sales analytics (revenue, orders count, average order value)
+   - Customer analytics (acquisition, retention, lifetime value)
+   - Product analytics (top sellers, slow movers, profit margins)
+   - Operational analytics (delivery times, warehouse efficiency)
+   - Marketing performance (promotion effectiveness, conversion rates)
+3. Create endpoints for:
+   - Dashboard metrics and KPIs
+   - Custom report generation with filtering options
+   - Data export in multiple formats (CSV, Excel, PDF)
+   - Scheduled reports delivery via email
+   - Real-time analytics streaming for dashboards
+4. Implement data aggregation pipelines from other services
+5. Add time-series analysis for trend identification
+6. Create forecasting algorithms for sales and inventory
+7. Implement caching strategy for improved performance
+8. Include data visualization helpers (chart data formatting)
+9. Add comprehensive validation and error handling
+10. Write unit and integration tests using Jest
+11. Include Swagger/OpenAPI documentation
+
+The service should implement ETL processes to collect data from other microservices, be containerized with Docker, and follow best practices for handling large datasets efficiently.
+```
+
+## Customer Support Service Prompt
+
+```
+Develop a NodeJS Customer Support Service for a quick commerce delivery application with these requirements:
+
+1. Use Express.js with TypeScript and RESTful API design
+2. Implement MongoDB for storing support-related data:
+   - Support tickets (customer info, issue description, status, priority)
+   - Chat conversations
+   - Frequently asked questions
+   - Canned responses
+   - Customer feedback and ratings
+3. Create endpoints for:
+   - Ticket creation, assignment, and management
+   - Live chat functionality (WebSocket integration)
+   - FAQ management and retrieval
+   - Customer feedback collection and analysis
+   - Support agent performance metrics
+   - Order issue resolution workflows
+   - Automated response suggestions
+4. Implement integration with order management for context-aware support
+5. Add sentiment analysis for customer messages
+6. Create notification system for new and escalated tickets
+7. Implement ticket prioritization algorithms
+8. Add comprehensive validation and error handling
+9. Create unit and integration tests using Jest
+10. Include Swagger/OpenAPI documentation
+
+The service should follow microservice best practices, be containerized with Docker, include proper logging for support interactions, and implement WebSocket connections for real-time chat capabilities.
+```
+
+## Notification Service Prompt
+
+```
+Create a scalable NodeJS Notification Service for a quick commerce delivery platform with the following specifications:
+
+1. Use Express.js with TypeScript and event-driven architecture
+2. Implement MongoDB for storing notification data:
+   - Notification templates
+   - Notification history
+   - User preferences and settings
+   - Delivery status and metrics
+3. Develop integrations for multiple notification channels:
+   - Email using Nodemailer with SMTP or SendGrid/Mailgun
+   - SMS using Twilio or similar service
+   - Push notifications using Firebase Cloud Messaging
+   - In-app notifications via WebSockets
+4. Create endpoints for:
+   - Sending notifications across channels
+   - Managing notification templates
+   - User notification preferences
+   - Notification history and tracking
+   - Scheduling notifications for future delivery
+   - Batch notification processing
+5. Implement message queue consumer (RabbitMQ/Kafka) for handling notification requests
+6. Add rate limiting and throttling to prevent notification spam
+7. Create retry mechanism for failed notification delivery
+8. Implement template rendering with handlebars or similar
+9. Add analytics for notification delivery and engagement
+10. Include comprehensive validation and error handling
+11. Write unit and integration tests using Jest
+12. Include Swagger/OpenAPI documentation
+
+The service should be containerized with Docker, follow microservice architecture best practices, implement proper logging of notification activities, and include monitoring hooks.
+```
+
+## Customer-facing Web Application Prompt
+
+```
+Develop a React-based customer-facing web application for a quick commerce delivery platform with the following requirements:
+
+1. Use React 18+ with TypeScript and modern hooks pattern
+2. Implement state management using Redux Toolkit or React Query
+3. Use Tailwind CSS for responsive styling
+4. Create the following key pages and components:
+   - Homepage with featured products and categories
+   - Product listing page with filters (price, category, rating)
+   - Product detail page with variants selection and add to cart
+   - Shopping cart with real-time updates
+   - Checkout process (address, payment method, order summary)
+   - User authentication (register, login, password reset)
+   - User profile (personal details, addresses, payment methods)
+   - Order history and tracking
+   - Wish list functionality
+   - Search with autocomplete suggestions
+5. Implement responsive design for mobile, tablet, and desktop
+6. Add loading states and skeleton loaders for API calls
+7. Implement error handling and user-friendly error messages
+8. Create form validation using Formik or React Hook Form
+9. Add animations and transitions using Framer Motion
+10. Implement performance optimizations (lazy loading, code splitting)
+11. Add unit and integration tests using Jest and React Testing Library
+12. Include accessibility features (ARIA attributes, keyboard navigation)
+
+Ensure the application has a modern, intuitive UI focused on quick product discovery and easy checkout. Include a location-based delivery time estimate feature and real-time order tracking capabilities.
+```
+
+## Warehouse Management Interface Prompt
+
+```
+Create a React-based Warehouse Management Interface for a quick commerce delivery platform with the following specifications:
+
+1. Use React 18+ with TypeScript and functional components
+2. Implement state management using Redux Toolkit or React Query
+3. Use Material UI or Ant Design for component styling
+4. Create the following key features and screens:
+   - Dashboard with key metrics (pending orders, inventory levels, staff performance)
+   - Order processing queue with priority indicators
+   - Interactive picking lists with barcode/QR scanning capability
+   - Packing station interface with order details and instructions
+   - Inventory management screens (stock levels, relocations)
+   - Staff assignment and performance tracking
+   - Quality control checklists and verification
+   - Returns processing workflow
+   - Delivery handoff interface with signature capture
+5. Implement real-time updates using WebSockets
+6. Add barcode/QR code scanning functionality
+   - Support for camera on mobile devices
+   - Support for USB barcode scanners on desktop
+7. Create intuitive drag-and-drop interfaces where appropriate
+8. Implement role-based access control for different warehouse staff roles
+9. Add comprehensive form validation and error handling
+10. Create color-coded visual indicators for priorities and statuses
+11. Implement responsive design for both desktop and mobile tablet use
+12. Write unit and integration tests using Jest and React Testing Library
+
+The interface should prioritize efficiency and speed for warehouse operations, with clear visual cues and minimal clicks for common actions. Focus on creating workflows that minimize errors and maximize throughput.
+```
+
+## Administrative Dashboard Prompt
+
+```
+Develop a comprehensive React-based Administrative Dashboard for a quick commerce delivery platform with the following requirements:
+
+1. Use React 18+ with TypeScript and functional components
+2. Implement state management using Redux Toolkit
+3. Use a component library like Chakra UI or MUI for styling
+4. Create data visualization with Recharts or Chart.js
+5. Develop the following key sections and features:
+   - Executive dashboard with KPIs and business metrics
+   - Sales analytics with filtering and comparison options
+   - Customer management and segmentation
+   - Order management with advanced filtering and bulk actions
+   - Product catalog management with bulk editing capabilities
+   - Inventory overview across warehouses
+   - Promotion and discount creation and management
+   - Delivery performance monitoring
+   - User management for staff accounts and permissions
+   - System configuration and settings
+   - Financial reporting and reconciliation
+6. Implement advanced data tables with sorting, filtering, and export
+7. Create customizable dashboard widgets with drag-and-drop layout
+8. Add scheduled reports generation and distribution
+9. Implement role-based access control with granular permissions
+10. Create audit logs for administrative actions
+11. Add form validation and error handling
+12. Implement responsive design for various screen sizes
+13. Write unit and integration tests using Jest and React Testing Library
+
+The dashboard should focus on providing actionable insights, with the ability to drill down into details when needed. Include anomaly detection for unusual patterns in sales or operations and enable quick action capabilities directly from analytics views.
+```
+
+## API Gateway & Integration Prompt
+
+```
+Create a NodeJS API Gateway and Integration Layer for a quick commerce delivery platform with these specifications:
+
+1. Use Express.js or NestJS with TypeScript
+2. Implement an API Gateway pattern using Kong, Express Gateway, or a custom solution
+3. Create the following core functionality:
+   - Request routing to appropriate microservices
+   - Authentication and authorization middleware
+   - Rate limiting and throttling
+   - Request/response transformation
+   - API versioning support
+   - Circuit breaking for service resilience
+   - Logging and monitoring
+   - CORS handling
+   - Response caching where appropriate
+4. Implement service discovery using Consul or similar
+5. Add service-to-service communication security
+6. Create unified error handling and standardized responses
+7. Implement request validation using JSON Schema
+8. Add health check endpoints for services
+9. Create comprehensive documentation with Swagger/OpenAPI
+10. Implement GraphQL federation for frontend efficiency (optional)
+11. Add analytics collection for API usage
+12. Write integration tests for routes and middleware
+
+The gateway should act as the single entry point for all client applications while handling cross-cutting concerns like security, monitoring, and reliability. Ensure proper load balancing and scalability features are implemented.
+```
+
+## DevOps & Infrastructure Prompt
+
+```
+Develop comprehensive DevOps configuration and infrastructure as code for a quick commerce delivery platform with the following specifications:
+
+1. Create Docker configurations:
+   - Individual Dockerfiles for each microservice
+   - Docker Compose setup for local development
+   - Multi-stage builds for optimized images
+2. Implement Kubernetes manifests for:
+   - Deployment configurations with resource limits
+   - Service definitions with proper networking
+   - Ingress controllers for external access
+   - ConfigMaps and Secrets management
+   - Horizontal Pod Autoscaling
+   - StatefulSets for databases
+   - PersistentVolume claims for storage
+3. Set up CI/CD pipelines using GitHub Actions or similar:
+   - Automated testing on pull requests
+   - Linting and code quality checks
+   - Security scanning
+   - Build and push to container registry
+   - Automated deployments with environment promotion
+4. Create Infrastructure as Code using Terraform or Pulumi:
+   - Cloud provider resources (AWS/GCP/Azure)
+   - Networking configuration
+   - Database instances
+   - Caching layers
+   - Storage solutions
+   - Monitoring infrastructure
+5. Implement monitoring and observability:
+   - Prometheus for metrics collection
+   - Grafana for dashboards
+   - ELK or Loki stack for log aggregation
+   - Distributed tracing with Jaeger or similar
+   - Alerting configuration with PagerDuty or similar
+6. Add database migration and backup solutions
+7. Implement security best practices with:
+   - Network policies
+   - RBAC configuration
+   - Secret management
+   - Security scanning in pipelines
+
+The infrastructure should be designed for high availability, scalability, and security, with proper separation of concerns between development, staging, and production environments.
+```
+
+These prompts should provide coding assistants with enough context to generate relevant, detailed code for each component of your quick commerce delivery app. Each prompt maintains focus on the specific domain while ensuring the broader context of the quick commerce delivery platform is preserved. You can copy and paste these into tools like Cursor or Windsurf to generate detailed code implementations.

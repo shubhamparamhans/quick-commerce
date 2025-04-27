@@ -1,0 +1,223 @@
+To keep your microservices developed independently while maintaining synchronization across the project, I recommend implementing a structured approach to organize and manage your prompts. Here's a comprehensive strategy:
+
+## Creating a Project Prompt Repository
+
+1. **Create a centralized prompt repository** in your project structure:
+
+```
+quick-commerce-app/
+├── prompt-repository/
+│   ├── architecture/
+│   │   └── system-architecture.md
+│   ├── services/
+│   │   ├── authentication-service.md
+│   │   ├── product-catalog-service.md
+│   │   ├── order-management-service.md
+│   │   └── ...
+│   ├── frontend/
+│   │   ├── customer-app.md
+│   │   ├── warehouse-interface.md
+│   │   └── admin-dashboard.md
+│   ├── integration/
+│   │   ├── api-gateway.md
+│   │   └── service-communication.md
+│   └── devops/
+│       └── infrastructure.md
+```
+
+2. **Create a shared definitions file** to establish common data models, conventions, and interfaces:
+
+```
+quick-commerce-app/
+├── prompt-repository/
+│   ├── shared/
+│   │   ├── data-models.md
+│   │   ├── api-conventions.md
+│   │   ├── error-standards.md
+│   │   └── event-schemas.md
+```
+
+## Synchronization Strategies
+
+1. **API Contract Documentation**
+
+Create a detailed API contract for each microservice that specifies:
+- Endpoints
+- Request/response formats
+- Authentication requirements
+- Error response standards
+
+Example in `api-conventions.md`:
+```markdown
+# API Conventions for Quick Commerce App
+
+## Standard Response Format
+All API responses should follow this structure:
+```json
+{
+  "status": "success|error",
+  "data": { ... },
+  "error": { "code": "ERROR_CODE", "message": "Human readable message" },
+  "meta": { "pagination": { ... } }
+}
+```
+
+## Standard Error Codes
+- AUTH001: Authentication required
+- AUTH002: Invalid credentials
+- ...
+
+## API Versioning
+All endpoints should be prefixed with /api/v1/...
+```
+
+2. **Event Schema Documentation**
+
+Document all events that will be published/consumed between services:
+
+```markdown
+# Event Schema: ORDER_CREATED
+
+## Purpose
+Notifies relevant systems when a new order is created.
+
+## Producer
+Order Management Service
+
+## Consumers
+- Payment Processing Service
+- Warehouse Management Service
+- Notification Service
+
+## Payload Schema
+```json
+{
+  "event": "ORDER_CREATED",
+  "timestamp": "ISO8601 timestamp",
+  "data": {
+    "orderId": "string",
+    "customerId": "string",
+    "items": [
+      {
+        "productId": "string",
+        "variantId": "string",
+        "quantity": "number",
+        "price": "number"
+      }
+    ],
+    "totalAmount": "number",
+    "shippingAddress": { ... }
+  }
+}
+```
+```
+
+3. **Service Dependency Graph**
+
+Create a visual representation of service dependencies:
+
+```markdown
+# Service Dependency Graph
+
+## Authentication Service
+- Dependencies: None
+- Dependents: All services requiring authentication
+
+## Product Catalog Service
+- Dependencies: Authentication Service
+- Dependents: Order Management Service, Customer-facing Web App
+
+## Order Management Service
+- Dependencies: Authentication Service, Product Catalog Service, Payment Processing Service
+- Dependents: Warehouse Management Service, Notification Service
+...
+```
+
+## Implementation Approach
+
+1. **Version Control for Prompts**
+
+Keep your prompt repository under version control along with your code. This ensures:
+- Changes are tracked
+- Multiple team members can collaborate
+- History is maintained
+
+2. **Service Development Workflow**
+
+When developing a microservice:
+
+1. Start with the architecture and shared definitions
+2. Pull the specific service prompt and any dependency documentation
+3. Generate code with the LLM tool (Cursor, Windsurf, etc.)
+4. Implement the service according to the contracts defined in shared documentation
+5. Test against mock implementations of dependent services
+
+3. **Integration Testing Strategy**
+
+Include in your prompts specifications for integration testing:
+
+```markdown
+# Integration Testing for Order Management Service
+
+## Test Cases
+1. Create Order
+   - Mock dependencies: Product Catalog, Payment Service
+   - Assert events published: ORDER_CREATED
+   - Verify inventory check calls to Product Catalog
+
+2. Cancel Order
+   - Mock dependencies: Product Catalog, Payment Service
+   - Assert events published: ORDER_CANCELLED
+   - Verify inventory restock calls to Product Catalog
+   - Verify refund initiated calls to Payment Service
+```
+
+4. **Consistency Checkers**
+
+Create scripts to validate consistency across your implementation:
+
+- API endpoint validators to ensure implementations match contracts
+- Event schema validators to ensure published events match documented schemas
+- Database schema validators to ensure data models are properly implemented
+
+## Practical Implementation
+
+1. **Start each service development with**:
+
+```bash
+# Example workflow
+mkdir -p services/authentication-service
+cp prompt-repository/services/authentication-service.md services/authentication-service/PROMPT.md
+cp prompt-repository/shared/* services/authentication-service/
+# Open in coding assistant
+```
+
+2. **Use the following prefix when generating code with your LLM tool**:
+
+```
+I am developing a microservice for a quick commerce delivery platform. This service needs to integrate with other microservices in the system.
+
+I have the following service requirements:
+[PASTE SERVICE PROMPT]
+
+And it needs to follow these shared conventions:
+[PASTE RELEVANT SHARED DEFINITIONS]
+
+Please generate the code for this service, ensuring it adheres to the integration standards defined above.
+```
+
+3. **For updating services when dependencies change**:
+
+```
+I need to update my [SERVICE NAME] to accommodate changes in its dependency [DEPENDENCY NAME].
+
+Original Service Requirements:
+[PASTE SERVICE PROMPT]
+
+Updated Dependency API Contract:
+[PASTE UPDATED API CONTRACT]
+
+Please help me update my service implementation to maintain compatibility with the updated dependency.
+```
+
+By following this structured approach, you'll be able to develop microservices independently while ensuring they can seamlessly integrate with each other according to well-defined contracts and conventions.

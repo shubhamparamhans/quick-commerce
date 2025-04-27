@@ -1,0 +1,228 @@
+
+I am developing an enterprise grade quick commerce app based in NodeJS, MongoDB, Postgres, and react.
+Idea is to create a complete app to brush my development skill.
+This app will have 4 main component
+1. User facing webapp, from where customer would be interacting
+2. Warehouse webapp, where all the order packging part would be maanged
+3. Admin back office kind of dashboard for analytics and tracking
+We would be developing all the required systems to make this whole app running in nodejs be it authentication system, order management,
+product catalogue service, payment system, warehouse management, dashboard, customer support in microservice fashion.
+Frontend would be primarily in ReactJS.
+
+“You are an experienced software architect specializing in open-source web applications. Your task is to generate a series of detailed prompts to guide the development of this quick commerce delivery app. The  app should focus on speed and ease of use for both customers and administrators.
+
+# Quick Commerce App Architecture & Development Guide
+
+## System Architecture Overview
+
+1. **Microservices Backend**:
+   - Authentication Service
+   - Product Catalog Service
+   - Order Management Service
+   - Payment Processing Service
+   - Warehouse Management Service
+   - Analytics & Reporting Service
+   - Customer Support Service
+   - Notification Service
+
+2. **Frontend Applications**:
+   - Customer-facing Web Application
+   - Warehouse Management Interface
+   - Administrative Dashboard
+
+3. **Database Layer**:
+   - MongoDB for product catalog, user profiles
+   - PostgreSQL for transactional data, orders, payments
+   - Redis for caching and session management
+
+4. **DevOps Components**:
+   - CI/CD pipeline
+   - Containerization with Docker
+   - Container orchestration with Kubernetes
+   - API Gateway for routing
+
+Now, let's break down the development into structured prompts:
+
+## 1. Project Setup & Infrastructure
+
+Begin by setting up the development environment and establishing the core infrastructure:
+
+- Initialize a monorepo structure using Lerna or Nx
+- Set up Docker and docker-compose for local development
+- Configure CI/CD pipelines with GitHub Actions or similar
+- Establish base configuration for microservices
+- Create shared libraries for common functionality
+- Configure database connections and initial schemas
+
+## 2. Authentication Service
+
+This service will handle user authentication, registration, and authorization:
+
+- Implement JWT-based authentication
+- Design user roles (customer, warehouse staff, admin)
+- Create secure password handling with bcrypt
+- Implement social login options
+- Design refresh token mechanism
+- Add 2FA capability
+- Build password reset flow
+- Create profile management endpoints
+
+## 3. Product Catalog Service
+
+This service will manage all product-related functionality:
+
+- Create product schema with variants, categories, and attributes
+- Implement inventory tracking
+- Design search and filtering capabilities
+- Build product recommendation system
+- Implement product image management
+- Create product review and rating system
+- Build category management
+- Design product promotion handling
+
+## 4. Order Management Service
+
+This service will handle the entire order lifecycle:
+
+- Create order creation flow
+- Implement order status tracking
+- Design order modification capabilities
+- Build order history and retrieval
+- Implement order cancellation flow
+- Create delivery time estimation logic
+- Design order analytics and reporting
+- Build returns and refunds processing
+
+## 5. Payment Processing Service
+
+This service will handle all payment-related functionality:
+
+- Integrate with payment gateways (Stripe, PayPal)
+- Implement secure payment processing
+- Design payment status tracking
+- Build payment verification system
+- Create refund processing
+- Implement invoice generation
+- Design payment analytics
+- Build payment failure handling
+
+## 6. Warehouse Management Service
+
+This service will handle inventory and order fulfillment:
+
+- Create inventory management system
+- Implement pick and pack workflow
+- Design warehouse zone management
+- Build packing optimization algorithms
+- Implement delivery assignment
+- Create inventory forecasting
+- Design warehouse staff management
+- Build quality control checkpoints
+
+## 7. Analytics & Reporting Service
+
+This service will provide business insights and reporting:
+
+- Implement data aggregation pipelines
+- Design dashboard metrics and KPIs
+- Create sales and revenue reporting
+- Build customer behavior analytics
+- Implement inventory turnover analysis
+- Design delivery performance metrics
+- Create custom report generation
+- Build real-time monitoring capabilities
+
+## 8. Customer Support Service
+
+This service will handle customer inquiries and support:
+
+- Implement ticket management system
+- Design chat support functionality
+- Build FAQ and self-service options
+- Create order issue resolution flow
+- Implement customer feedback collection
+- Design support agent interface
+- Build automated response system
+- Create escalation workflows
+
+## 9. Notification Service
+
+This service will manage all communications:
+
+- Implement email notification system
+- Create SMS notification capabilities
+- Design in-app notification center
+- Build push notification service
+- Implement notification preferences
+- Create notification templates
+- Design scheduled notifications
+- Build notification analytics
+
+## 10. Customer-facing Web Application
+
+This React application will serve your end customers:
+
+- Create responsive UI with Tailwind CSS
+- Implement user registration and login flow
+- Design product browsing and searching
+- Build shopping cart functionality
+- Implement checkout process
+- Create order tracking interface
+- Design user profile management
+- Build payment method management
+- Implement reviews and ratings UI
+- Create wishlist functionality
+
+## 11. Warehouse Management Interface
+
+This React application will be used by warehouse staff:
+
+- Create order processing dashboard
+- Implement inventory management interface
+- Design picking and packing workflow UI
+- Build delivery assignment interface
+- Create return processing screens
+- Design staff performance metrics
+- Implement quality control checklists
+- Build warehouse layout visualization
+
+## 12. Administrative Dashboard
+
+This React application will serve your business administrators:
+
+- Create analytics dashboard with charts
+- Implement user management interface
+- Design product catalog management
+- Build order management capabilities
+- Create promotion and discount management
+- Design warehouse performance monitoring
+- Implement customer support overview
+- Build system configuration interface
+- Create financial reporting tools
+
+## 13. Integration & Testing
+
+Ensure your system works as a cohesive whole:
+
+- Implement API gateway with Kong or similar
+- Create service-to-service communication
+- Build end-to-end testing suite
+- Implement performance testing
+- Design security testing approach
+- Create automated integration tests
+- Build smoke and regression tests
+- Implement monitoring and logging
+
+## 14. Deployment & DevOps
+
+Prepare your application for production:
+
+- Configure Kubernetes clusters
+- Implement database backups
+- Design high-availability architecture
+- Create auto-scaling policies
+- Implement blue-green deployment
+- Design disaster recovery plan
+- Build monitoring and alerting system
+- Create infrastructure as code
+
