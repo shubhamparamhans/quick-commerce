@@ -10,21 +10,23 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-scripts": "5.0.1",
-    "react-router-dom": "^6.3.0",
     "@reduxjs/toolkit": "^1.8.2",
-    "react-redux": "^8.0.4",
-    "tailwindcss": "^3.0.0",
+    "@testing-library/react": "^13.0.0",
     "formik": "^2.2.6",
     "framer-motion": "^4.1.17",
-    "@testing-library/react": "^13.0.0",
-    "@testing-library/jest-dom": "^5.16.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-redux": "^8.0.4",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "5.0.1",
+    "tailwindcss": "^3.0.0",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
-    "typescript": "^4.5.2",
-    "prettier": "^2.5.1"
+    "@testing-library/jest-dom": "^6.6.3",
+    "@types/jest": "^29.5.14",
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.2"
   },
   "eslintConfig": {
     "extends": [

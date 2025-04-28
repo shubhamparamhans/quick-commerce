@@ -1,28 +1,32 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Homepage from './pages/Homepage';
-import ProductListing from './pages/ProductListing';
-import Cart from './pages/Cart';
-import Checkout from './pages/Checkout';
-import UserAuthentication from './pages/UserAuthentication';
-import UserProfile from './pages/UserProfile';
-import OrderHistory from './pages/OrderHistory';
+// import Homepage from './pages/Homepage';
+
+const Homepage = lazy(() => import('./pages/Homepage'));
+const ProductListing = lazy(() => import('./pages/ProductListing'));
+const Cart = lazy(() => import('./pages/Cart'));
+const Checkout = lazy(() => import('./pages/Checkout'));
+const UserAuthentication = lazy(() => import('./pages/UserAuthentication'));
+const UserProfile = lazy(() => import('./pages/UserProfile'));
+const OrderHistory = lazy(() => import('./pages/OrderHistory'));
 
 const App: React.FC = () => {
   return (
     <Router>
       <Navbar />
-      <Switch>
-        <Route path="/" component={Homepage} exact />
-        <Route path="/products" component={ProductListing} />
-        <Route path="/cart" component={Cart} />
-        <Route path="/checkout" component={Checkout} />
-        <Route path="/login" component={UserAuthentication} />
-        <Route path="/profile" component={UserProfile} />
-        <Route path="/order-history" component={OrderHistory} />
-      </Switch>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/products" element={<ProductListing />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/login" element={<UserAuthentication />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/order-history" element={<OrderHistory />} />
+        </Routes>
+      </Suspense>
       <Footer />
     </Router>
   );

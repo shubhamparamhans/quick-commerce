@@ -1,5 +1,11 @@
 import React from 'react';
 import ProductCard from '../components/ProductCard';
+import { motion } from 'framer-motion';
+
+const containerVariants = {
+  hidden: { opacity: 0, x: -50 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
+};
 
 const Homepage: React.FC = () => {
   const products = [
@@ -8,14 +14,19 @@ const Homepage: React.FC = () => {
   ];
 
   return (
-    <div className="p-5">
+    <motion.div
+      className="p-5"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       <h1 className="text-2xl font-bold">Featured Products</h1>
       <div className="flex flex-wrap">
         {products.map(product => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
