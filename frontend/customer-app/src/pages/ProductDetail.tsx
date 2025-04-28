@@ -29,29 +29,31 @@ const ProductDetail: React.FC = () => {
   };
 
   return (
-    <div className="p-5">
-      <img src={product.image} alt={product.name} className="w-full h-64 object-cover mb-4" />
-      <h1 className="text-2xl font-bold mb-2">{product.name}</h1>
-      <p className="text-lg mb-4">${product.price}</p>
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-2">Select Variant</label>
-        <select
-          value={selectedVariant}
-          onChange={(e) => setSelectedVariant(e.target.value)}
-          className="border p-2 rounded w-full"
+    <div className="p-5 flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-4">
+      <img src={product.image} alt={product.name} className="w-full md:w-1/2 h-64 object-cover mb-4" />
+      <div className="w-full md:w-1/2">
+        <h1 className="text-2xl font-bold mb-2">{product.name}</h1>
+        <p className="text-lg mb-4">${product.price}</p>
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-2">Select Variant</label>
+          <select
+            value={selectedVariant}
+            onChange={(e) => setSelectedVariant(e.target.value)}
+            className="border p-2 rounded w-full"
+          >
+            <option value="">Select a variant</option>
+            {product.variants.map((variant, index) => (
+              <option key={index} value={variant}>{variant}</option>
+            ))}
+          </select>
+        </div>
+        <button
+          onClick={handleAddToCart}
+          className="bg-blue-500 text-white p-2 rounded w-full"
         >
-          <option value="">Select a variant</option>
-          {product.variants.map((variant, index) => (
-            <option key={index} value={variant}>{variant}</option>
-          ))}
-        </select>
+          Add to Cart
+        </button>
       </div>
-      <button
-        onClick={handleAddToCart}
-        className="bg-blue-500 text-white p-2 rounded w-full"
-      >
-        Add to Cart
-      </button>
     </div>
   );
 };

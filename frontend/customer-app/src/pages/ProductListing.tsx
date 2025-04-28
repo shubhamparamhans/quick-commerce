@@ -1,5 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProductCard from '../components/ProductCard';
+import { motion } from 'framer-motion';
+
+const containerVariants = {
+  hidden: { opacity: 0, y: -20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+};
 
 const ProductListing: React.FC = () => {
   const [filters, setFilters] = useState({
@@ -7,6 +13,21 @@ const ProductListing: React.FC = () => {
     category: '',
     rating: '',
   });
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      try {
+        // Simulate API call
+        setLoading(false);
+      } catch (err) {
+        setError('Failed to load products. Please try again later.');
+        setLoading(false);
+      }
+    }, 2000);
+  }, []);
 
   const products = [
     { id: 1, name: 'Product 1', price: 29.99, category: 'Electronics', rating: 4, image: 'link_to_image' },
@@ -27,9 +48,45 @@ const ProductListing: React.FC = () => {
     setFilters(prev => ({ ...prev, [name]: value }));
   };
 
+  if (loading) {
+    return (
+      <motion.div
+        className="p-5"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <h1 className="text-2xl font-bold mb-4">Product Listing</h1>
+        <div className="flex flex-wrap">
+          {[...Array(6)].map((_, index) => (
+            <div key={index} className="border rounded p-4 m-2 w-1/4 animate-pulse bg-gray-200 h-48"></div>
+          ))}
+        </div>
+      </motion.div>
+    );
+  }
+
+  if (error) {
+    return (
+      <motion.div
+        className="p-5"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <h1 className="text-2xl font-bold mb-4">Product Listing</h1>
+        <p className="text-red-500">{error}</p>
+      </motion.div>
+    );
+  }
+
   return (
-    <div>
-    <div className="p-5"></div>
+    <motion.div
+      className="p-5"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       <h1 className="text-2xl font-bold mb-4">Product Listing</h1>
       <div className="mb-4 flex space-x-4">
         <select name="price" onChange={handleFilterChange} className="border p-2 rounded">
@@ -55,7 +112,7 @@ const ProductListing: React.FC = () => {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
