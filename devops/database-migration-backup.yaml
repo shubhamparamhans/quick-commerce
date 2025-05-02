@@ -1,0 +1,94 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: db-backup
+spec:
+  schedule: "0 2 * * *" # Daily at 2 AM
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: db-backup
+            image: postgres:13
+            env:
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: password
+            command: ["/bin/sh", "-c"]
+            args:
+              - pg_dump -h db-host -U db-user db-name > /backup/db-backup.sql;
+                aws s3 cp /backup/db-backup.sql s3://my-backup-bucket/db-backup.sql;
+            volumeMounts:
+            - name: backup-volume
+              mountPath: /backup
+          restartPolicy: OnFailure
+          volumes:
+          - name: backup-volume
+            emptyDir: {}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-secret
+  namespace: default
+stringData:
+  password: example-password
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: customer-support-db-backup
+spec:
+  schedule: "0 3 * * *" # Daily at 3 AM
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: db-backup
+            image: mongo:5.0
+            command: ["/bin/sh", "-c"]
+            args:
+              - mongodump --host customer-support-db-host --db customer-support-db --out /backup/customer-support-db;
+                aws s3 cp /backup/customer-support-db s3://my-backup-bucket/customer-support-db;
+            volumeMounts:
+            - name: backup-volume
+              mountPath: /backup
+          restartPolicy: OnFailure
+          volumes:
+          - name: backup-volume
+            emptyDir: {}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: payment-processing-db-backup
+spec:
+  schedule: "0 4 * * *" # Daily at 4 AM
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: db-backup
+            image: postgres:13
+            env:
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: payment-processing-db-secret
+                  key: password
+            command: ["/bin/sh", "-c"]
+            args:
+              - pg_dump -h payment-processing-db-host -U db-user payment-processing-db > /backup/payment-processing-db.sql;
+                aws s3 cp /backup/payment-processing-db.sql s3://my-backup-bucket/payment-processing-db.sql;
+            volumeMounts:
+            - name: backup-volume
+              mountPath: /backup
+          restartPolicy: OnFailure
+          volumes:
+          - name: backup-volume
+            emptyDir: {}

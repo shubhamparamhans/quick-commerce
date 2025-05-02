@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  analytics-reporting-service:
+    build:
+      context: ./services/analytics-reporting-service
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=development
+
+  authentication-service:
+    build:
+      context: ./services/authentication-service
+    ports:
+      - "3002:3000"
+    environment:
+      - NODE_ENV=development
+
+  customer-support-service:
+    build:
+      context: ./services/customer-support-service
+    ports:
+      - "3003:3000"
+    environment:
+      - NODE_ENV=development
+
+  notification-service:
+    build:
+      context: ./services/notification-service
+    ports:
+      - "3004:3000"
+    environment:
+      - NODE_ENV=development
+
+  order-management-service:
+    build:
+      context: ./services/order-management-service
+    ports:
+      - "3005:3000"
+    environment:
+      - NODE_ENV=development
+
+  payment-processing-service:
+    build:
+      context: ./services/payment-processing-service
+    ports:
+      - "3006:3000"
+    environment:
+      - NODE_ENV=development
+
+  product-catalogue-service:
+    build:
+      context: ./services/product-catalogue-service
+    ports:
+      - "3007:3000"
+    environment:
+      - NODE_ENV=development
+
+  warehouse-management-service:
+    build:
+      context: ./services/warehouse-management-service
+    ports:
+      - "3008:3000"
+    environment:
+      - NODE_ENV=development
