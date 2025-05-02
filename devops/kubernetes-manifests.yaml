@@ -384,3 +384,138 @@ spec:
             name: payment-processing-service
             port:
               number: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: warehouse-management-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: warehouse-management-service
+  template:
+    metadata:
+      labels:
+        app: warehouse-management-service
+    spec:
+      containers:
+      - name: warehouse-management-service
+        image: warehouse-management-service:latest
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: warehouse-management-service
+spec:
+  selector:
+    app: warehouse-management-service
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: warehouse-management-ingress
+spec:
+  rules:
+  - host: warehouse-management.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: warehouse-management-service
+            port:
+              number: 80
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: warehouse-management-config
+  namespace: default
+  labels:
+    app: warehouse-management-service
+  annotations:
+    description: ConfigMap for Warehouse Management Service
+  data:
+    MONGO_URI: mongodb://warehouse-db:27017/warehouse-management
+    LOG_LEVEL: info
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: warehouse-management-secret
+  namespace: default
+  labels:
+    app: warehouse-management-service
+  annotations:
+    description: Secret for sensitive data of Warehouse Management Service
+stringData:
+  JWT_SECRET: supersecretkey
+  API_KEY: someapikey
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: warehouse-management-hpa
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: warehouse-management-service
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: warehouse-db
+  namespace: default
+  labels:
+    app: warehouse-management-service
+spec:
+  serviceName: "warehouse-db"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: warehouse-db
+  template:
+    metadata:
+      labels:
+        app: warehouse-db
+    spec:
+      containers:
+      - name: warehouse-db
+        image: mongo:5.0
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: warehouse-db-storage
+          mountPath: /data/db
+  volumeClaimTemplates:
+  - metadata:
+      name: warehouse-db-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
