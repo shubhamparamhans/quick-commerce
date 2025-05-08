@@ -4,7 +4,7 @@ import Warehouse from '../models/Warehouse';
 const router = express.Router();
 
 // Get warehouse efficiency metrics
-router.get('/warehouses/:id/efficiency-metrics', async (req, res) => {
+router.get('/warehouses/:id/efficiency-metrics', async (req:any, res:any) => {
   try {
     const warehouse = await Warehouse.findById(req.params.id);
     if (!warehouse) {
@@ -22,7 +22,7 @@ router.get('/warehouses/:id/efficiency-metrics', async (req, res) => {
       efficiencyScore,
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 });
 

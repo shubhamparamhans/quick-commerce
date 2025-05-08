@@ -16,6 +16,8 @@ import reportingRoutes from './routes/reportingRoutes';
 import { initializeSocket } from './realtime/inventorySync';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsDoc from 'swagger-jsdoc';
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -25,7 +27,7 @@ app.use(express.json());
 
 // MongoDB Connection
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/warehouse-management';
-mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGO_URI,) // { useNewUrlParser: true, useUnifiedTopology: true }
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
 
@@ -43,24 +45,14 @@ app.use('/api', barcodeRoutes);
 app.use('/api', batchProcessingRoutes);
 app.use('/api', webhookRoutes);
 app.use('/api', reportingRoutes);
+// Read the JSON file
+const filePath = path.join(__dirname, 'swagger.json');
+const swaggerDefinition = JSON.parse(fs.readFileSync(filePath, 'utf8'));
 
 // Swagger setup
 const swaggerOptions = {
-  swaggerDefinition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'Warehouse Management Service API',
-      version: '1.0.0',
-      description: 'API documentation for the Warehouse Management Service',
-    },
-    servers: [
-      {
-        url: 'http://localhost:3000',
-        description: 'Local server',
-      },
-    ],
-  },
-  apis: ['./src/routes/*.ts'], // Adjust the path to match your routes
+  swaggerDefinition: swaggerDefinition,
+  apis: [], // Adjust the path to match your routes
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);

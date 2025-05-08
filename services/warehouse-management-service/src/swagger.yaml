@@ -1,0 +1,121 @@
+openapi: 3.0.0
+info:
+  title: Warehouse Management Service API
+  version: 1.0.0
+  description: API documentation for the Warehouse Management Service.
+paths:
+  /api/warehouses:
+    get:
+      summary: Get all warehouses
+      responses:
+        '200':
+          description: A list of warehouses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Warehouse'
+    post:
+      summary: Create a new warehouse
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Warehouse'
+      responses:
+        '201':
+          description: Warehouse created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Warehouse'
+  /api/warehouses/{id}:
+    get:
+      summary: Get a warehouse by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Warehouse details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Warehouse'
+    put:
+      summary: Update a warehouse by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Warehouse'
+      responses:
+        '200':
+          description: Warehouse updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Warehouse'
+    delete:
+      summary: Delete a warehouse by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Warehouse deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+components:
+  schemas:
+    Warehouse:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        location:
+          type: string
+        inventory:
+          type: array
+          items:
+            type: object
+            properties:
+              itemName:
+                type: string
+              quantity:
+                type: number
+        staffAssignments:
+          type: array
+          items:
+            type: object
+            properties:
+              staffName:
+                type: string
+              task:
+                type: string
+        qualityControlCheckpoints:
+          type: array
+          items:
+            type: string

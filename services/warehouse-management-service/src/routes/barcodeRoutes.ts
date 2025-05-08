@@ -10,7 +10,7 @@ router.post('/generate-qr', async (req, res) => {
     const qrCode = await generateQRCode(data);
     res.status(200).json({ qrCode });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 });
 
@@ -21,7 +21,7 @@ router.post('/generate-barcode', (req, res) => {
     const barcode = generateBarcode(data);
     res.status(200).json({ barcode });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 });
 

@@ -4,7 +4,7 @@ import Warehouse from '../models/Warehouse';
 const router = express.Router();
 
 // Process a return for an order
-router.post('/warehouses/:id/returns', async (req, res) => {
+router.post('/warehouses/:id/returns', async (req:any, res:any) => {
   try {
     const warehouse = await Warehouse.findById(req.params.id);
     if (!warehouse) {
@@ -17,12 +17,12 @@ router.post('/warehouses/:id/returns', async (req, res) => {
 
     res.status(201).json({ message: 'Return processed successfully' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 });
 
 // Get return details for an order
-router.get('/warehouses/:id/returns/:orderId', async (req, res) => {
+router.get('/warehouses/:id/returns/:orderId', async (req:any, res:any) => {
   try {
     const warehouse = await Warehouse.findById(req.params.id);
     if (!warehouse) {
@@ -39,7 +39,7 @@ router.get('/warehouses/:id/returns/:orderId', async (req, res) => {
 
     res.status(200).json(returnDetails);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 });
 

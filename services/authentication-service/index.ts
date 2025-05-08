@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import routes from './routes';
 import rateLimit from 'express-rate-limit';
 import swaggerUi from 'swagger-ui-express';
-import swaggerJsDoc from 'swagger-jsdoc';
+// import swaggerJsDoc from 'swagger-jsdoc';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -28,26 +28,26 @@ app.use(limiter);
 app.use(bodyParser.json());
 
 // Swagger Documentation
-const swaggerOptions = {
-  swaggerDefinition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'Authentication Service API',
-      version: '1.0.0',
-      description: 'API documentation for the Authentication Service',
-    },
-    servers: [
-      {
-        url: 'http://localhost:3001',
-        description: 'Local server',
-      },
-    ],
-  },
-  apis: ['./routes/*.ts'], // Adjust the path to your route files
-};
+// const swaggerOptions = {
+//   swaggerDefinition: {
+//     openapi: '3.0.0',
+//     info: {
+//       title: 'Authentication Service API',
+//       version: '1.0.0',
+//       description: 'API documentation for the Authentication Service',
+//     },
+//     servers: [
+//       {
+//         url: 'http://localhost:3001',
+//         description: 'Local server',
+//       },
+//     ],
+//   },
+//   apis: ['./routes/*.ts'], // Adjust the path to your route files
+// };
 
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+// const swaggerDocs = swaggerJsDoc(swaggerOptions);
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 console.log('Swagger documentation available at /api-docs');
 

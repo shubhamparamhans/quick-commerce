@@ -1,10 +1,14 @@
-import express from 'express';
+// import express from 'express';
 import Warehouse from '../models/Warehouse';
+import { Request, Response } from 'express';
+var AsyncRouter = require("express-async-router").AsyncRouter;
+var router = AsyncRouter();
+//req: Request, res: Response
 
-const router = express.Router();
+// const router = express.Router();
 
 // Get inventory forecasting and reordering suggestions
-router.get('/warehouses/:id/inventory-forecasting', async (req, res) => {
+router.get('/warehouses/:id/inventory-forecasting', async (req: Request, res: Response) => {
   try {
     const warehouse = await Warehouse.findById(req.params.id);
     if (!warehouse) {
@@ -24,7 +28,7 @@ router.get('/warehouses/:id/inventory-forecasting', async (req, res) => {
 
     res.status(200).json(suggestions);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 });
 

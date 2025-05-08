@@ -4,7 +4,7 @@ import Warehouse from '../models/Warehouse';
 const router = express.Router();
 
 // Add a quality control checkpoint
-router.post('/warehouses/:id/quality-control', async (req, res) => {
+router.post('/warehouses/:id/quality-control', async (req:any, res:any) => {
   try {
     const warehouse = await Warehouse.findById(req.params.id);
     if (!warehouse) {
@@ -14,12 +14,12 @@ router.post('/warehouses/:id/quality-control', async (req, res) => {
     await warehouse.save();
     res.status(201).json(warehouse);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error });
   }
 });
 
 // Get all quality control checkpoints for a warehouse
-router.get('/warehouses/:id/quality-control', async (req, res) => {
+router.get('/warehouses/:id/quality-control', async (req:any, res:any) => {
   try {
     const warehouse = await Warehouse.findById(req.params.id);
     if (!warehouse) {
@@ -27,12 +27,12 @@ router.get('/warehouses/:id/quality-control', async (req, res) => {
     }
     res.status(200).json(warehouse.qualityControlCheckpoints);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 });
 
 // Delete a quality control checkpoint
-router.delete('/warehouses/:id/quality-control/:checkpoint', async (req, res) => {
+router.delete('/warehouses/:id/quality-control/:checkpoint', async (req:any, res:any) => {
   try {
     const warehouse = await Warehouse.findById(req.params.id);
     if (!warehouse) {
@@ -44,7 +44,7 @@ router.delete('/warehouses/:id/quality-control/:checkpoint', async (req, res) =>
     await warehouse.save();
     res.status(200).json(warehouse);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 });
 

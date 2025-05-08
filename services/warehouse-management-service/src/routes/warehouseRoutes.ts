@@ -10,7 +10,7 @@ router.post('/warehouses', async (req, res) => {
     await warehouse.save();
     res.status(201).json(warehouse);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error });
   }
 });
 
@@ -20,12 +20,12 @@ router.get('/warehouses', async (req, res) => {
     const warehouses = await Warehouse.find();
     res.status(200).json(warehouses);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 });
 
 // Get a single warehouse by ID
-router.get('/warehouses/:id', async (req, res) => {
+router.get('/warehouses/:id', async (req:any, res:any) => {
   try {
     const warehouse = await Warehouse.findById(req.params.id);
     if (!warehouse) {
@@ -33,12 +33,12 @@ router.get('/warehouses/:id', async (req, res) => {
     }
     res.status(200).json(warehouse);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 });
 
 // Update a warehouse by ID
-router.put('/warehouses/:id', async (req, res) => {
+router.put('/warehouses/:id', async (req:any, res:any) => {
   try {
     const warehouse = await Warehouse.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!warehouse) {
@@ -46,12 +46,12 @@ router.put('/warehouses/:id', async (req, res) => {
     }
     res.status(200).json(warehouse);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error });
   }
 });
 
 // Delete a warehouse by ID
-router.delete('/warehouses/:id', async (req, res) => {
+router.delete('/warehouses/:id', async (req:any, res:any) => {
   try {
     const warehouse = await Warehouse.findByIdAndDelete(req.params.id);
     if (!warehouse) {
@@ -59,7 +59,7 @@ router.delete('/warehouses/:id', async (req, res) => {
     }
     res.status(200).json({ message: 'Warehouse deleted successfully' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 });
 

@@ -1,10 +1,14 @@
 import express from 'express';
 import Warehouse from '../models/Warehouse';
+import { Request, Response } from 'express';
+var AsyncRouter = require("express-async-router").AsyncRouter;
+var router = AsyncRouter();
 
-const router = express.Router();
+
+// const router = express.Router();
 
 // Batch update inventory for a warehouse
-router.post('/warehouses/:id/batch-inventory', async (req, res) => {
+router.post('/warehouses/:id/batch-inventory', async (req: Request, res: Response) => {
   try {
     const warehouse = await Warehouse.findById(req.params.id);
     if (!warehouse) {
@@ -25,7 +29,7 @@ router.post('/warehouses/:id/batch-inventory', async (req, res) => {
     await warehouse.save();
     res.status(200).json({ message: 'Batch inventory update successful' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 });
 

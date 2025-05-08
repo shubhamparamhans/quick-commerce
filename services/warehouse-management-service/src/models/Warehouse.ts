@@ -1,9 +1,10 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-interface IInventory {
+interface   IInventory {
   product: string;
   quantity: number;
   location: string;
+  id:string;
 }
 
 interface IZone {
@@ -24,6 +25,17 @@ interface IWarehouse extends Document {
   zones: IZone[];
   staffAssignments: IStaffAssignment[];
   qualityControlCheckpoints: string[];
+   returns: {
+    orderId: string;
+    items: any[];
+    reason: string;
+  }[];
+  deliveryHandoffs: [
+    {
+      orderId: { type: String, required: true },
+      signature: { type: String, required: true },
+    },
+  ],
 }
 
 const InventorySchema: Schema = new Schema({
@@ -50,6 +62,19 @@ const WarehouseSchema: Schema = new Schema({
   zones: { type: [ZoneSchema], required: true },
   staffAssignments: { type: [StaffAssignmentSchema], required: true },
   qualityControlCheckpoints: { type: [String], required: true },
+  returns: [
+    {
+      orderId: { type: String, required: true },
+      items: { type: Array, required: true },
+      reason: { type: String, required: true },
+    },
+  ],
+  deliveryHandoffs: [
+    {
+      orderId: { type: String, required: true },
+      signature: { type: String, required: true },
+    },
+  ],
 });
 
 export default mongoose.model<IWarehouse>('Warehouse', WarehouseSchema);
